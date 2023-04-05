@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   checker_input.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: malleman <malleman@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,31 +10,44 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
+#include"push_swap.h"
 
-# include "libft/libft.h"
-# include <stdlib.h>
-# include <unistd.h>
-
-# define INTMAX +2147483647
-# define INTMIN -2147483648
-
-typedef struct s_input
+void    sa(t_stack *a)
 {
-    int             nb_elem;
-    int             *array;
-    char            **str_tab;
-}   t_input;
+    int top_nbr;
 
-typedef t_list  t_stack;
+    top_nbr = *(int *) ft_lstlast(a)->content;
+    while (a && a->next && a->next->next)
+        a = a->next;
+    
+    ft_printf("sa\n");
+}
 
-t_stack    *ft_parse(int ac, char **av);
-int        valid_input(char *str);
+void    sb(t_stack *b)
+{
+    int top_nbr;
 
-/* Fonctions permettant d'effectuer les mouvements des piles a et b. */
-void    sa(t_stack *a);
-void    sb(t_stack *b);
+    top_nbr = *(int *) ft_lstlast(b)->content;
+    while (b && b->next && b->next->next)
+        b = b->next;
+    *(int *)b->next->data = *(int *)b->data;
+    *(int *)b->data = top_nbr;
+    ft_printf("sb\n");
+}
 
+void    ss(t_stack *a, t_stack *b)
+{
+    sa(a);
+    sb(b);
+    printf("ss\n");
+}
 
-#endif 
+void    pa(t_stack *a, t_stack *b)
+{
+    int top_nbr_b;
+    
+    if(!b)
+        return ;
+    top_nbr_b = *(int *) ft_lstlast(b)->content;
+
+}
