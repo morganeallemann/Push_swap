@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   checker_input.c                                    :+:      :+:    :+:   */
+/*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: malleman <malleman@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -23,6 +23,23 @@ void    sa(t_stack *a)
     ft_printf("sa\n");
 }
 
+void	ra(t_stack *a)
+{
+	int		temp;
+	int		temp_pres;
+
+	temp_pres = *(int *) ft_lstlast(a)->content;
+	while (a)
+	{	
+		temp = *(int *)(a->content);
+		*(int *)(a->content) = temp_pres;
+		temp_pres = temp;
+		a = a->next;
+	}
+	ft_printf("ra\n");
+}
+
+/*
 void    sb(t_stack *b)
 {
     int top_nbr;
@@ -51,3 +68,4 @@ void    pa(t_stack *a, t_stack *b)
     top_nbr_b = *(int *) ft_lstlast(b)->content;
 
 }
+*/

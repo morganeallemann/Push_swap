@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   checker_size_and_order.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: malleman <malleman@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,37 +10,39 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
+#include "push_swap.h"
 
-# include "libft/libft.h"
-# include <stdlib.h>
-# include <unistd.h>
-
-# define INTMAX +2147483647
-# define INTMIN -2147483648
-
-typedef struct s_input
+int in_order(t_stack *a)
 {
-    int             nb_elem;
-    int             *array;
-    char            **str_tab;
-}   t_input;
+    while (a->next != NULL)
+    {
+        if (*(int *)a->content < *(int *)a->next->content)
+            return (0);
+        a = a->next;
+    }
+    return (1);
+}
 
-typedef t_list  t_stack;
+void    size_checker(t_stack *a, t_stack *b)
+{
+    int len;
 
-t_stack    *ft_parse(int ac, char **av);
-int        valid_input(char *str);
-t_stack *new_stack(t_input *parse);
-void    ft_free_parse(t_input *parse);
-void    size_checker(t_stack *a, t_stack *b);
-void    sort_3(t_stack *a);
-int in_order(t_stack *a);
-
-/* Fonctions permettant d'effectuer les mouvements des piles a et b. */
-void    sa(t_stack *a);
-void    sb(t_stack *b);
-void	ra(t_stack *a);
-
-
-#endif 
+    len = ft_lstsize(a);
+    b = (void *)b;
+    if (len == 1)
+        return ;
+    if (len == 2)
+    {
+        if (!(in_order(a)))
+            sa(a);
+    }
+    else if (len == 3)
+        sort_3(a);
+    /*else if (len == 4)
+        sort_4(a, b);
+    else if (len == 5)
+        sort_5(a, b);
+    else
+        big_sort(a, b, size)
+    */
+}

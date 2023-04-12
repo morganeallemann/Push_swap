@@ -66,7 +66,7 @@ int check_double(char *str)
     i = 0;
     while (str[i])
     {
-        j = i;
+        j = i + 1;
         while (str[j])
         {
             if (str[i] == str[j])
