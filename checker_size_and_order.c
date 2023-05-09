@@ -12,37 +12,47 @@
 
 #include "push_swap.h"
 
-int in_order(t_stack *a)
+/*
+	Fonction permettant de verifier si les nombres entres sont deja dans le 
+	bon ordre. On boucle tant qu'il y a des elements dans la liste et on 
+	compare toujours l'element sur lequel on est avec le suivant. Tant qu'il 
+	est plus grand on continue sinon on renvoi 0 pour indiquer que l'ordre 
+	n'est pas le bon.
+*/
+int	in_order(t_stack *a)
 {
-    while (a->next != NULL)
-    {
-        if (*(int *)a->content < *(int *)a->next->content)
-            return (0);
-        a = a->next;
-    }
-    return (1);
+	while (a->next != NULL)
+	{
+		if (*(int *)a->content < *(int *)a->next->content)
+			return (0);
+		a = a->next;
+	}
+	return (1);
 }
 
-void    size_checker(t_stack *a, t_stack *b)
+/*
+	Fonction permettant de definir le nombre d'elements entree en parametre.
+	La fonction lstsize nous donnera le nombre d'element de la liste chainee.
+	On renvera une fonction en fonction du nombre de chiffre a trier.
+*/
+void	size_checker(t_stack *a, t_stack *b)
 {
-    int len;
+	int	len;
 
-    len = ft_lstsize(a);
-    b = (void *)b;
-    if (len == 1)
-        return ;
-    if (len == 2)
-    {
-        if (!(in_order(a)))
-            sa(a);
-    }
-    else if (len == 3)
-        sort_3(a);
-    /*else if (len == 4)
-        sort_4(a, b);
-    else if (len == 5)
-        sort_5(a, b);
-    else
-        big_sort(a, b, size)
-    */
+	len = ft_lstsize(a);
+	if (len == 1)
+		return ;
+	if (len == 2)
+	{
+		if (!(in_order(a)))
+			sa(a);
+	}
+	else if (len == 3)
+		sort_3(a);
+	else if (len == 4)
+		sort_4(a, b);
+	else if (len == 5)
+		sort_5(a, b);
+	else
+		big_sort(a, b, len);
 }

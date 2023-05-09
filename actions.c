@@ -12,17 +12,27 @@
 
 #include"push_swap.h"
 
-void    sa(t_stack *a)
+/*
+	Fonction qui intervertit les 2 premiers éléments au sommet de la pile a.
+	On trouve le dernier element de la liste puis alons se placer a l'avant
+	dernier node et on swap le dernier et l'avant dernier. 
+*/
+void	sa(t_stack *a)
 {
-    int top_nbr;
+	int	top_nbr;
 
-    top_nbr = *(int *) ft_lstlast(a)->content;
-    while (a && a->next && a->next->next)
-        a = a->next;
-    
-    ft_printf("sa\n");
+	top_nbr = *(int *) ft_lstlast(a)->content;
+	while (a && a->next && a->next->next)
+		a = a->next;
+	*(int *)a->next->content = *(int *)a->content;
+	*(int *)a->content = top_nbr;
+	ft_printf("sa\n");
 }
 
+/*
+	Fonction qui décale d’une position vers le haut tous les élements de la 
+	pile a. Le premier élément devient le dernier.
+*/
 void	ra(t_stack *a)
 {
 	int		temp;
@@ -40,32 +50,72 @@ void	ra(t_stack *a)
 }
 
 /*
-void    sb(t_stack *b)
-{
-    int top_nbr;
-
-    top_nbr = *(int *) ft_lstlast(b)->content;
-    while (b && b->next && b->next->next)
-        b = b->next;
-    *(int *)b->next->data = *(int *)b->data;
-    *(int *)b->data = top_nbr;
-    ft_printf("sb\n");
-}
-
-void    ss(t_stack *a, t_stack *b)
-{
-    sa(a);
-    sb(b);
-    printf("ss\n");
-}
-
-void    pa(t_stack *a, t_stack *b)
-{
-    int top_nbr_b;
-    
-    if(!b)
-        return ;
-    top_nbr_b = *(int *) ft_lstlast(b)->content;
-
-}
+	Fonction qui décale d’une position vers le bas tous les élements de
+	la pile a. Le dernier élément devient le premier.
 */
+void	rra(t_stack *a)
+{
+	int		temp;
+
+	temp = *(int *) a->content;
+	while (a->next)
+	{
+		*(int *)(a->content) = *(int *)(a->next->content);
+		a = a->next;
+	}
+	*(int *)a->content = temp;
+	ft_printf("rra\n");
+}
+
+/*
+	Fonction qui prend le premier élément au sommet de a et le met sur b.
+*/
+void	pb(t_stack **a, t_stack **b)
+{
+	int		*temp_ptr;
+	t_stack	*copy;
+
+	if (!a || !*a)
+		return ;
+	temp_ptr = malloc(sizeof(int));
+	if (!temp_ptr)
+		return ;
+	*temp_ptr = *(int *)ft_lstlast(*a)->content;
+	ft_lstadd_back(b, ft_lstnew((void *)temp_ptr));
+	copy = *a;
+	while (copy->next && copy->next->next)
+		copy = copy->next;
+	ft_lstdelone(ft_lstlast(*a), free);
+	copy->next = NULL;
+	ft_putendl_fd("pb", 1);
+}
+
+/*
+	Fonction qui prend le premier élément au sommet de b et le met sur a.
+*/
+void	pa(t_stack **a, t_stack **b)
+{	
+	int		*temp_ptr;
+	int		remove_first;
+	t_stack	*copy;
+
+	remove_first = 0;
+	if (!b || !*b)
+		return ;
+	temp_ptr = malloc(sizeof(int));
+	if (!temp_ptr)
+		return ;
+	*temp_ptr = *(int *)ft_lstlast(*b)->content;
+	ft_lstadd_back(a, ft_lstnew((void *)temp_ptr));
+	copy = *b;
+	while (copy->next && copy->next->next)
+		copy = copy->next;
+	if (ft_lstsize(*b) == 1)
+		remove_first = 1;
+	ft_lstdelone(ft_lstlast(*b), free);
+	if (remove_first == 1)
+		*b = NULL;
+	else
+		copy->next = NULL;
+	ft_putendl_fd("pa", 1);
+}

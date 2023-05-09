@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   free_fonctions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: malleman <malleman@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,18 +10,38 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"push_swap.h"
-#include <unistd.h>
+#include "push_swap.h"
 
-int	main(int ac, char **av)
+/* Fonction permettant de free les stack a et b. */
+void	free_stack(t_stack **a, t_stack **b)
 {
-	t_stack	*stack_a;
-	t_stack	*stack_b;
-	t_input	parse;
+	ft_lstclear(a, free);
+	ft_lstclear(b, free);
+}
 
-	stack_b = NULL;
-	stack_a = ft_parse(ac, av, &parse);
-	size_checker(stack_a, stack_b);
-	free_stack(&stack_a, &stack_b);
-	return (0);
+/*
+	Fonction permettant de free nos variables str_tab et array une fois que 
+	nous avons fini de les utiliser pour le parsing.  
+*/
+void	ft_free_parse(t_input *parse)
+{
+	int	i;
+
+	i = 0;
+	free(parse->array);
+	if (parse->str_tab != NULL)
+	{
+		while (parse->str_tab[i])
+		{
+			free(parse->str_tab[i]);
+			i++;
+		}
+		free(parse->str_tab);
+	}
+}
+
+void	ft_error(void)
+{
+	write(2, "Error\n", 6);
+	exit(1);
 }

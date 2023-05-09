@@ -11,7 +11,8 @@
 # **************************************************************************** #
 #-------------------------- SOURCES -------------------------------------------#
 SRCS 		=	main.c init_and_parse.c checker_input.c create_stack.c \
-				checker_size_and_order.c actions.c sort_3_to_5.c
+				checker_size_and_order.c actions.c sort_3.c sort_4.c sort_5.c \
+				big_sort.c free_fonctions.c
 
 #--------------------------	VARIABLES -----------------------------------------#
 NAME		= push_swap
@@ -20,8 +21,7 @@ OBJS		= ${SRCS:.c=.o}
 
 CC			= gcc
 CFLAGSDDBUG	= -Wall -Wextra -Werror -I. -Iincludes -g -fsanitize=address
-CFLAGS		= -Wall -Wextra -Werror -I. -Iincludes
-
+CFLAGS		= -Wall -Wextra -Werror -I. -Iincludes -g3
 #-------------------------- COMMANDES -----------------------------------------#
 .c.o:
 	${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
@@ -30,7 +30,7 @@ all: 	${NAME}
 
 ${NAME}: ${OBJS}
 	make -C ./libft
-	${CC} ${CFLAGSDDBUG} ${SRCS} ${LIBFT} -o ${NAME} -Llibft -lft
+	${CC} ${CFLAGS} ${SRCS} ${LIBFT} -o ${NAME} -Llibft -lft
 
 
 clean :
